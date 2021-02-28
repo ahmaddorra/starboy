@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Ahmad el Dorra">
+    <meta name="generator" content="Hugo 0.80.0">
+    <title>Starboy Web Animation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <style>
+        :root{
+            --cross-main-color: #EA4BA0;
+            --cross-shadow-color-first: #B22419;
+            --cross-shadow-color-second: rgb(167, 167, 167, 0.1);
+            --background-image: url("images/0.png");
+            --background-offset: 50vw;
+            --background-color: #04005C;
+            
+            --vertical-width: 20px;  /* used by .vertical & .horizontal */
+            --horizontal-width: 51px;   /* used by horizontal.left & .horizontal.right*/
+            --horizontal-spacing: 71px; /* used by .horizontal.left & .horizontal.right*/
+            --horizontal-top: 80px;     /* used by .horizontal */
+            --horizontal-bottom-after: 6px; /* used by .horizontal.left:after & .horizontal.right:after  */
+            --cross-arrows-border-width-after: 7px; /* used by .horizontal.left:after & .horizontal.right:after & .vertical.up:after  */
+            --vertical-up-bottom-after: 37.76562309px; /* used by .vertical.up:after  */
+            --vertical-up-left-after: 10px; /* used by .vertical.up:after  */
+            --vertical-box-shadow: 0px 7px 8px 5px;
+            --vertical-up-box-shadow: 0px 0px 8px 5px;
+            --horizontal-left-box-shadow: -2px 0px 8px 5px;
+            --horizontal-right-box-shadow: 2px 0px 8px 5px;
+            --cross-arrow-up-box-shadow: -5px -5px 7px 0;
+            --cross-arrow-left-box-shadow:  -5px 7px 7px 0;
+            --cross-arrow-right-box-shadow: 5px -7px 7px 0;
+        }
+        .cross{
+            position: relative;
+            border: 5px solid black;
+            padding: 10px;
+            height: 850px;
+            background-image: var(--background-image);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-color: var(--background-color);
+            background-position: left top;
+            transition: all 0.05s ease;
+        }
+        .vertical{
+            z-index: 2;
+            position:absolute;
+            margin: 0 auto;
+            width: var(--vertical-width);
+            height: 260px;
+            background-color: var(--cross-main-color);
+            top: 100px; left: 0; bottom: 0; right: 0;
+            color: var(--cross-shadow-color-first);
+            box-shadow: var(--vertical-box-shadow);
+            transition: all 0.05s ease, background-color 1s ease, box-shadow 0.05s ease;
+        }
+        .vertical.up{
+            z-index: 3;
+            height: 42px;
+            top: 38px;
+            box-shadow: var(--vertical-up-box-shadow);
+        }
+        .vertical.up::after{
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            bottom: var(--vertical-up-bottom-after);
+            left: var(--vertical-up-left-after);
+            box-sizing: border-box;
+            border: var(--cross-arrows-border-width-after) solid black;
+            border-color: var(--cross-main-color) transparent transparent var(--cross-main-color);
+            transform-origin: 0 0;
+            transform: rotate(45deg);
+            color: var(--cross-shadow-color-first);
+            box-shadow: var(--cross-arrow-up-box-shadow);
+            -webkit-transition: all 0.05s ease, border-color 1s ease, box-shadow 0.05s ease;
+            -moz-transition: all 0.05s ease, border-color 1s ease, box-shadow 0.05s ease;
+            -ms-transition: all 0.05s ease, border-color 1s ease, box-shadow 0.05s ease;
+            transition: all 0.05s ease,border-color 1s ease, box-shadow 0.05s ease;
+        }
+        
+        .horizontal{
+            z-index: 4;
+            margin: 0 auto;
+            width: var(--vertical-width);
+            height: var(--vertical-width);
+            background-color: var(--cross-main-color);
+            position: absolute;
+            top: var(--horizontal-top); left: 0; bottom: 0; right: 0;
+            color: var(--cross-shadow-color-first);
+            transition:all 0.05s ease, background-color 1s ease, box-shadow 0.05s ease;
+        }
+        .horizontal.left{
+            z-index: 1;
+            width: var(--horizontal-width);
+            right: var(--horizontal-spacing);
+            box-shadow: var(--horizontal-left-box-shadow);
+        }
+        .horizontal.left::after{
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            bottom: var(--horizontal-bottom-after);
+            box-sizing: border-box;
+            border: var(--cross-arrows-border-width-after) solid black;
+            border-color: transparent transparent var(--cross-main-color) var(--cross-main-color);
+            transform-origin: 0 0;
+            transform: rotate(45deg);
+            color: var(--cross-shadow-color-first);
+            box-shadow: var(--cross-arrow-left-box-shadow);
+            -webkit-transition: all 0.05s ease, border-color 1s ease, box-shadow 0.05s ease;
+            -moz-transition:  all 0.05s ease,border-color 1s ease, box-shadow 0.05s ease;
+            -ms-transition: all 0.05s ease, border-color 1s ease, box-shadow 0.05s ease;
+            transition: all 0.05s ease,border-color 1s ease, box-shadow 0.05s ease;
+        }
+        .horizontal.right{
+            z-index: 1;
+            width: var(--horizontal-width);
+            left: var(--horizontal-spacing);
+            box-shadow: var(--horizontal-right-box-shadow);
+        }
+        .horizontal.right::after{
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            bottom: var(--horizontal-bottom-after);
+            left: var(--horizontal-width);
+            box-sizing: border-box;
+            border: var(--cross-arrows-border-width-after) solid black;
+            border-color:  var(--cross-main-color) var(--cross-main-color) transparent transparent;
+            transform-origin: 0 0;
+            transform: rotate(45deg);
+            color: var(--cross-shadow-color-first);
+            box-shadow: var(--cross-arrow-right-box-shadow);
+            -webkit-transition: all 0.05s ease, border-color 1s ease, box-shadow 0.05s ease;
+            -moz-transition:  all 0.05s ease,border-color 1s ease, box-shadow 0.05s ease;
+            -ms-transition: all 0.05s ease, border-color 1s ease, box-shadow 0.05s ease;
+            transition: all 0.05s ease,border-color 1s ease, box-shadow 0.05s ease;
+        }
+        
+        @media only screen and (max-width: 500px){
+            .cross{
+                background-size: cover;
+                 background-position: var(--background-offset) bottom;
+            }
+            
+        }
+    h6,p{
+        color: white;
+    }
+   p{
+       font-size: 12px;
+   }
+    </style>
+  </head>
+  <body>
+  <div class="cross">
+      <div id="up" class="vertical up"></div>
+      <div id="horizontalLeft" class="horizontal left"></div>
+      <div id="horizontal" class="horizontal"></div>
+      <div id="horizontalRight" class="horizontal right"></div>
+      <div id="vertical" class="vertical"></div>
+  </div>
+  
+  
+  <nav class="navbar fixed-bottom navbar-expand-sm  pt-0 pb-0">
+    <div class="container-fluid justify-content-start">
+        <div class="col-12 col-md-3">
+            <img class="float-start p-1" width="70" height="70" src="images/starboy.png"/>
+            <div class="float-start">
+                <h6 class="pt-3">Starboy</h6>
+                <p class="pt-0 m-0">The weeknd, Daft Punk</p>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 text-center">
+            <div id="mp3_player">
+                <div id="audio_box"></div>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Starboy Web Animation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          This webpage uses the web audio api to control the audio and create the audio visualizations. Play the song and wait for the beat drop, Watch til the end :)
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script>
+       var cross = document.getElementsByClassName("cross")[0]
+       var audio = new Audio();
+       audio.autoplay = false
+       audio.src = "kygo.mp3"
+       audio.controls = true
+       audio.loop = true
+       audio.crossOrigin = "anonymous";
+       document.getElementById('audio_box').appendChild(audio);
+       
+       var canvas, ctx, source, context, analyser, fbc_array;
+       window.onload = function() {
+           cross.style.height = window.innerHeight + "px"
+           var myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'), {
+             keyboard: false
+           })
+           myModal.toggle()
+           document.getElementById('staticBackdrop').addEventListener('hidden.bs.modal', function () {
+               var AudioContext = window.AudioContext // Default
+                   || window.webkitAudioContext // Safari and old versions of Chrome
+                   || false;
+
+               if (AudioContext) {
+                   context = new AudioContext; // AudioContext object instance
+                   analyser = context.createAnalyser(); // AnalyserNode method
+                   source = context.createMediaElementSource(audio);
+                   source.connect(analyser);
+                   analyser.connect(context.destination);
+                   frameLooper();
+               } else {
+                   alert("Sorry, but the Web Audio API is not supported by your browser. Please, consider upgrading to the latest version or downloading Google Chrome or Mozilla Firefox ");
+               }
+           });
+                     
+    
+       }
+    window.onresize = function(){
+        cross.style.height = window.innerHeight + "px"
+    }
+    
+       var backColorPeak = ["C92A26", "F4FEFF", "EA3372", "AEFCFE", "5A0D60", "E83232", "F9DFB1", "65172F"]
+       var backColor =     ["04005C", "030001", "1E173A", "112376", "9C1F27", "000 ", "0C1537", "0C0C2D"]
+       var backgroundOffset = ["50vw","-79px","-100vw","-70vw","left","-60vw","-150vw","-90vw"]
+       var crossColor = ["#EA4BA0", "#FF91E2", "#FFA6F6" , "#D986EF", "#ADBCFF", "#C72482", "#A50065", "#7EECFF", "#B57F00", "#B6A999",
+                         "#006B63", "#5FBAB0", "#7EECFF", "#ADBCFF", "#0095FF", "#00A494", "#006E62", "#2DBEB1", "#2F78E4", "#0082D4",
+                         "#0081A7", "#007A6D", "#F9F871", "#FFD25A", "#FFAB5B", "#FF836C", "#FF6085", "#EA4BA0", "#AD62D0", "#EA4BA0",
+                         "#F0ABC9", "#FFE4F8", "#55414A", "#BCA5AE", "#DDD7C6", "#FFF4FC", "#B78199", "#EA4BA0"]
+       var shadowColor = ["178, 36, 25", "255, 143, 225", "255, 166, 246", "217, 134, 239", "173, 188, 255", "199, 36, 130", "165, 0, 101", "126, 236, 255", "181, 127, 0", "182, 169, 153","0, 107, 99", "95, 186, 176", "126, 236, 255", "173, 188, 255", "0, 149, 255", "0, 164, 148", "0, 110, 98", "45, 190, 177", "47, 120, 228", "0, 130, 212", "0, 129, 167", "0, 122, 109", "249, 248, 113", "255, 210, 90", "255, 171, 91", "255, 131, 108", "255, 96, 133", "234, 75, 160", "173, 98, 208", "234, 75, 160", "240, 171, 201", "255, 228, 248", "85, 65, 74", "188, 165, 174", "221, 215, 198", "255, 244, 252", "183, 129, 153", "234, 75, 160"]
+       var lowerBound = 100
+       var upperBound = 127
+       var bound = upperBound - lowerBound
+      
+       function frameLooper(){
+           window.requestAnimationFrame(frameLooper);
+           fbc_array = new Uint8Array(analyser.frequencyBinCount);
+           analyser.getByteFrequencyData(fbc_array);
+           animation_value = fbc_array[0]/2;
+           var diff = animation_value-lowerBound;
+           var difb = diff/bound ;
+           if(animation_value> 127){
+               animation_value = 127;
+           }
+           if(animation_value > lowerBound){
+               document.documentElement.style.setProperty("--background-image", "url(\"images/"+Math.floor(audio.currentTime/29%8)+".png\")");
+               document.documentElement.style.setProperty("--background-offset", backgroundOffset[Math.floor(audio.currentTime/29%8)] );
+               document.documentElement.style.setProperty("--background-color", "#"+backColorPeak[Math.floor(audio.currentTime/29%8)]);
+               document.documentElement.style.setProperty("--cross-main-color", crossColor[Math.floor(audio.currentTime/6%38)]);
+               document.documentElement.style.setProperty("--cross-shadow-color-first", "rgba("+shadowColor[Math.floor(audio.currentTime/6%38)]+ ", 0.75)");
+               
+               document.getElementById("vertical").style.height = difb * (460-260) + 260 +"px";
+               document.getElementById("vertical").style.top= difb * (202-100) + 100+"px";
+               
+               document.getElementById("up").style.height = difb * (62-42) + 42 +"px";
+               document.getElementById("up").style.top= difb * (60-38) + 38+"px";
+            
+               document.documentElement.style.setProperty("--vertical-up-bottom-after", difb * (44.77-37.76562309) + 37.76562309+"px");
+               document.documentElement.style.setProperty("--vertical-up-left-after", difb * (40-10) + 10 +"px");
+               document.documentElement.style.setProperty("--cross-arrows-border-width-after", difb * (28.5-7) + 7 +"px");
+               document.documentElement.style.setProperty("--horizontal-bottom-after", difb * (23.5 - 6) + 6+"px");
+               document.documentElement.style.setProperty("--horizontal-width", difb * (111 - 51) + 51+"px");
+               document.documentElement.style.setProperty("--horizontal-spacing", difb * (191 - 71) + 71+"px");
+               document.documentElement.style.setProperty("--vertical-width", difb * (80 - 20) + 20+"px");
+               document.documentElement.style.setProperty("--horizontal-top", difb * (122-80) + 80+"px");
+             document.documentElement.style.setProperty("--vertical-box-shadow", "0px "+(difb*(12 - 7) + 7)+"px "+( difb * (18 - 8) + 8)+"px "+(difb * (12 - 5) + 5)+"px")
+             document.documentElement.style.setProperty("--vertical-up-box-shadow", "0px "+(difb*(-5))+"px "+(difb*(14-8)+8)+"px "+(difb*(10-5)+5)+"px")
+             document.documentElement.style.setProperty("--horizontal-left-box-shadow", "-2px 0px "+(difb*(18-8)+8)+"px "+(difb*(12-5)+5)+"px")
+             document.documentElement.style.setProperty("--horizontal-right-box-shadow", "2px 0px "+(difb*(18-8)+8)+"px "+(difb*(12-5)+5)+"px")
+             document.documentElement.style.setProperty("--cross-arrow-up-box-shadow", (difb*(-11+5)-5)+"px "+(difb*(-12+5)-5)+"px "+(difb*(15-7)+7)+"px 0")
+             document.documentElement.style.setProperty("--cross-arrow-left-box-shadow",  (difb*(-11+5)-5)+"px "+(difb*(12-7)+7)+"px "+(difb*(15-7)+7)+"px 0")
+             document.documentElement.style.setProperty("--cross-arrow-right-box-shadow", (difb*(11-5)+5)+"px "+(difb*(-12+7)-7)+"px "+(difb*(15-7)+7)+"px 0")
+                                                                                 
+          
+           }
+           else{
+               document.documentElement.style.setProperty("--background-color", "#" + backColor[Math.floor(audio.currentTime/29%8)]);
+               document.documentElement.style.setProperty("--cross-main-color", crossColor[Math.floor(audio.currentTime/6%38)]);
+               document.documentElement.style.setProperty("--cross-shadow-color-first", "rgba("+shadowColor[Math.floor(audio.currentTime/6%38)]+ ", 0.75)");
+               document.getElementById("vertical").style.height = 260+"px";
+               document.getElementById("vertical").style.top= 100+"px";
+               
+               document.getElementById("up").style.height = 42+"px";
+               document.getElementById("up").style.top= 38+"px";
+               
+               document.documentElement.style.setProperty("--vertical-up-bottom-after", "37.76562309px");
+               document.documentElement.style.setProperty("--vertical-up-left-after", "10px");
+               document.documentElement.style.setProperty("--cross-arrows-border-width-after", "7px");
+               document.documentElement.style.setProperty("--horizontal-bottom-after", "6px");
+               document.documentElement.style.setProperty("--vertical-width","20px");
+               document.documentElement.style.setProperty("--horizontal-width","51px");
+               document.documentElement.style.setProperty("--horizontal-spacing","71px");
+               document.documentElement.style.setProperty("--horizontal-top","80px");
+                
+            document.documentElement.style.setProperty("--vertical-box-shadow", "0px 7px 8px 5px")
+            document.documentElement.style.setProperty("--vertical-up-box-shadow", "0px 0px 8px 5px")
+            document.documentElement.style.setProperty("--horizontal-left-box-shadow", "-2px 0px 8px 5px")
+            document.documentElement.style.setProperty("--horizontal-right-box-shadow", "2px 0px 8px 5px")
+            document.documentElement.style.setProperty("--cross-arrow-up-box-shadow", "-5px -5px 7px 0")
+            document.documentElement.style.setProperty("--cross-arrow-left-box-shadow",  "-5px 7px 7px 0")
+            document.documentElement.style.setProperty("--cross-arrow-right-box-shadow", "5px -7px 7px 0")
+           }
+       }
+    </script>
+    <script>
+        async function fetchImages() {
+            const [image1, image2, image3, image4, image5, image6, image7] = await Promise.all([
+              fetch('images/1.png'),
+            fetch('images/2.png'),
+            fetch('images/3.png'),
+            fetch('images/4.png'),
+            fetch('images/5.png'),
+            fetch('images/6.png'),
+            fetch('images/7.png'),
+            ]);
+
+            const image_1 = await image1;
+            const image_2 = await image2;
+            const image_3 = await image3;
+            const image_4 = await image4;
+            const image_5 = await image5;
+            const image_6 = await image6;
+            const image_7 = await image7;
+            return {
+              image_1,
+              image_2,
+              image_3,
+              image_4,image_5,image_6,image_7
+            };
+        }
+    fetchImages();
+        </script>
+  </body>
+</html>
