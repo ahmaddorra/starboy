@@ -208,11 +208,8 @@
     <script>
        var cross = document.getElementsByClassName("cross")[0]
        var audio = new Audio();
-       audio.autoplay = false
        audio.src = "kygo.mp3"
-       audio.controls = true
-       audio.loop = true
-       audio.crossOrigin = "anonymous";
+       
        
        var canvas, ctx, source, context, analyser, fbc_array;
        window.onload = function() {
