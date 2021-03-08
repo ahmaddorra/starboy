@@ -19,7 +19,7 @@
             --cross-main-color: #EA4BA0;
             --cross-shadow-color-first: #B22419;
             --cross-shadow-color-second: rgb(167, 167, 167, 0.1);
-            --background-image: url("images/0.png");
+            --background-image: url("images/0-min.png");
             --background-offset: 50vw;
             --background-color: #04005C;
             
@@ -181,7 +181,7 @@
       <nav class="navbar fixed-bottom navbar-expand-sm  pt-0 pb-0">
           <div class="container-fluid justify-content-start">
               <div class="col-12 col-md-3">
-                  <img class="float-start p-1" width="70" height="70" src="images/starboy.png" alt="Starboy by The Weeknd"/>
+                  <img class="float-start p-1" width="70" height="70" src="images/starboy-min.png" alt="Starboy by The Weeknd"/>
                   <div class="float-start">
                       <h6 class="pt-3">Starboy</h6>
                       <p class="pt-0 m-0">The Weeknd, Daft Punk</p>
@@ -279,7 +279,7 @@
                animation_value = 127;
            }
            if(animation_value > lowerBound){
-               document.documentElement.style.setProperty("--background-image", "url(\"images/"+Math.floor(audio.currentTime/29%8)+".png\")");
+               document.documentElement.style.setProperty("--background-image", "url(\"images/"+Math.floor(audio.currentTime/29%8)+"-min.png\")");
                document.documentElement.style.setProperty("--background-offset", backgroundOffset[Math.floor(audio.currentTime/29%8)] );
                document.documentElement.style.setProperty("--background-color", "#"+backColorPeak[Math.floor(audio.currentTime/29%8)]);
                document.documentElement.style.setProperty("--cross-main-color", crossColor[Math.floor(audio.currentTime/6%38)]);
@@ -341,13 +341,13 @@
     <script>
         async function fetchImages() {
             const [image1, image2, image3, image4, image5, image6, image7] = await Promise.all([
-              fetch('images/1.png'),
-            fetch('images/2.png'),
-            fetch('images/3.png'),
-            fetch('images/4.png'),
-            fetch('images/5.png'),
-            fetch('images/6.png'),
-            fetch('images/7.png'),
+              fetch('images/1-min.png'),
+            fetch('images/2-min.png'),
+            fetch('images/3-min.png'),
+            fetch('images/4-min.png'),
+            fetch('images/5-min.png'),
+            fetch('images/6-min.png'),
+            fetch('images/7-min.png'),
             ]);
 
             const image_1 = await image1;
